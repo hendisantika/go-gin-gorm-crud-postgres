@@ -20,3 +20,11 @@ func (t *TagsRepositoryImpl) Delete(tagsId int) {
 	result := t.Db.Where("id = ?", tagsId).Delete(&tags)
 	helper.ErrorPanic(result.Error)
 }
+
+// FindAll implements TagsRepository
+func (t *TagsRepositoryImpl) FindAll() []model.Tags {
+	var tags []model.Tags
+	result := t.Db.Find(&tags)
+	helper.ErrorPanic(result.Error)
+	return tags
+}

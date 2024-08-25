@@ -2,6 +2,7 @@ package repository
 
 import (
 	"errors"
+	"go-gin-gorm-crud-postgres/data/request"
 	"go-gin-gorm-crud-postgres/helper"
 	"go-gin-gorm-crud-postgres/model"
 	"gorm.io/gorm"
@@ -44,5 +45,15 @@ func (t *TagsRepositoryImpl) FindById(tagsId int) (tags model.Tags, err error) {
 // Save implements TagsRepository
 func (t *TagsRepositoryImpl) Save(tags model.Tags) {
 	result := t.Db.Create(&tags)
+	helper.ErrorPanic(result.Error)
+}
+
+// Update implements TagsRepository
+func (t *TagsRepositoryImpl) Update(tags model.Tags) {
+	var updateTag = request.UpdateTagsRequest{
+		Id:   tags.Id,
+		Name: tags.Name,
+	}
+	result := t.Db.Model(&tags).Updates(updateTag)
 	helper.ErrorPanic(result.Error)
 }

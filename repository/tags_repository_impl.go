@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"errors"
 	"go-gin-gorm-crud-postgres/helper"
 	"go-gin-gorm-crud-postgres/model"
 	"gorm.io/gorm"
@@ -27,4 +28,15 @@ func (t *TagsRepositoryImpl) FindAll() []model.Tags {
 	result := t.Db.Find(&tags)
 	helper.ErrorPanic(result.Error)
 	return tags
+}
+
+// FindById implements TagsRepository
+func (t *TagsRepositoryImpl) FindById(tagsId int) (tags model.Tags, err error) {
+	var tag model.Tags
+	result := t.Db.Find(&tag, tagsId)
+	if result != nil {
+		return tag, nil
+	} else {
+		return tag, errors.New("tag is not found")
+	}
 }

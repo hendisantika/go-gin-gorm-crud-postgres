@@ -1,6 +1,9 @@
 package config
 
-import "fmt"
+import (
+	"fmt"
+	"gorm.io/gorm"
+)
 
 const (
 	host     = "localhost"

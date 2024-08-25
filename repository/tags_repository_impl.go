@@ -40,3 +40,9 @@ func (t *TagsRepositoryImpl) FindById(tagsId int) (tags model.Tags, err error) {
 		return tag, errors.New("tag is not found")
 	}
 }
+
+// Save implements TagsRepository
+func (t *TagsRepositoryImpl) Save(tags model.Tags) {
+	result := t.Db.Create(&tags)
+	helper.ErrorPanic(result.Error)
+}

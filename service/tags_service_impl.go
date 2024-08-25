@@ -2,6 +2,7 @@ package service
 
 import (
 	"go-gin-gorm-crud-postgres/data/request"
+	"go-gin-gorm-crud-postgres/data/response"
 	"go-gin-gorm-crud-postgres/helper"
 	"go-gin-gorm-crud-postgres/model"
 	"go-gin-gorm-crud-postgres/repository"
@@ -32,4 +33,20 @@ func (t *TagsServiceImpl) Create(tags request.CreateTagsRequest) {
 // Delete implements TagsService
 func (t *TagsServiceImpl) Delete(tagsId int) {
 	t.TagsRepository.Delete(tagsId)
+}
+
+// FindAll implements TagsService
+func (t *TagsServiceImpl) FindAll() []response.TagsResponse {
+	result := t.TagsRepository.FindAll()
+
+	var tags []response.TagsResponse
+	for _, value := range result {
+		tag := response.TagsResponse{
+			Id:   value.Id,
+			Name: value.Name,
+		}
+		tags = append(tags, tag)
+	}
+
+	return tags
 }

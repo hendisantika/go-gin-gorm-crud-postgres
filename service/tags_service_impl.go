@@ -50,3 +50,15 @@ func (t *TagsServiceImpl) FindAll() []response.TagsResponse {
 
 	return tags
 }
+
+// FindById implements TagsService
+func (t *TagsServiceImpl) FindById(tagsId int) response.TagsResponse {
+	tagData, err := t.TagsRepository.FindById(tagsId)
+	helper.ErrorPanic(err)
+
+	tagResponse := response.TagsResponse{
+		Id:   tagData.Id,
+		Name: tagData.Name,
+	}
+	return tagResponse
+}
